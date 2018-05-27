@@ -255,9 +255,33 @@ int StepperControl::moveToCoords(long xDest, long yDest, long zDest,
   sourcePoint[2] = CurrentState::getInstance()->getZ();
 
   long currentPoint[3] = {0, 0, 0};
-  currentPoint[0] = CurrentState::getInstance()->getX();
-  currentPoint[1] = CurrentState::getInstance()->getY();
-  currentPoint[2] = CurrentState::getInstance()->getZ();
+
+//
+// ========== 2018/05/27 sync code behavior from FBTUG-6.0.1============
+//
+//
+// Keep current state if only change single axis.
+//
+//  currentPoint[0] = CurrentState::getInstance()->getX();
+//  currentPoint[1] = CurrentState::getInstance()->getY();
+//  currentPoint[2] = CurrentState::getInstance()->getZ();
+
+//  Example:
+//  Current state: X0, Y1000, Z1000
+//  Execute the command -- "G00 X1000"
+//    Original policy --  X1000, Y0, Z0
+//    New policy --  X1000, Y1000, Z1000
+//
+  currentPoint[0] = sourcePoint[0];   //CurrentState::getInstance()->getX();-2018.02.28
+  currentPoint[1] = sourcePoint[1];   //CurrentState::getInstance()->getY();-2018.02.2
+  currentPoint[2] = sourcePoint[2];   //CurrentState::getInstance()->getZ();-2018.02.28
+
+  if (xDest == -9999) xDest = currentPoint[0]; 
+  if (yDest == -9999) yDest = currentPoint[1]; 
+  if (zDest == -9999) zDest = currentPoint[2];
+//
+// ========== 2018/05/27 sync code behavior from FBTUG-6.0.1============
+//
 
   long destinationPoint[3] = {0, 0, 0};
   destinationPoint[0] = xDest;

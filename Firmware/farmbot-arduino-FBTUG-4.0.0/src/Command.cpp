@@ -23,7 +23,7 @@ Command::Command(char *commandChar)
 
   charPointer = strtok(charBuf, " \n\r");
 
-  if (charPointer[0] == 'G' || charPointer[0] == 'F' || charPointer[0] == 'T' )
+  if (charPointer[0] == 'G' || charPointer[0] == 'F' || charPointer[0] == 'T' || charPointer[0] == 'g')
   {
     commandCodeEnum = getGCodeEnum(charPointer);
   }
@@ -44,8 +44,19 @@ Command::Command(char *commandChar)
 CommandCodeEnum Command::getGCodeEnum(char *code)
 {
 
-  if (strcmp(code, "G0") == 0 || strcmp(code, "G00") == 0)
+  if (strcmp(code, "G0") == 0 || strcmp(code, "G00") == 0 || strcmp(code, "g00") == 0 || strcmp(code, "g0") == 0)
   {
+//
+// ========== 2018/05/27 sync code behavior from FBTUG-6.0.1============
+//  Keep current state if only change single axis.
+//  Set value to -9999 for axis initialize, if axis value doesn't change by user, it will keep current state 
+//
+    axisValue[0] = -9999;  
+    axisValue[1] = -9999; 
+    axisValue[2] = -9999; 
+//
+// ========== 2018/05/27 sync code behavior from FBTUG-6.0.1============
+//
     return G00;
   }
   if (strcmp(code, "G1") == 0 || strcmp(code, "G01") == 0)
