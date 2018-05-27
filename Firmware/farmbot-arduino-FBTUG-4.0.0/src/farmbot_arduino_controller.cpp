@@ -178,8 +178,11 @@ void setup()
 
   delay(100);
 
+  //
+  // Inital the Servo (Pin4/5) by FBTUG - JoeHou
+  //
   // Start the motor handling
-  //ServoControl::getInstance()->attach();
+  ServoControl::getInstance()->attach();
 
   // Load motor settings
   StepperControl::getInstance()->loadSettings();

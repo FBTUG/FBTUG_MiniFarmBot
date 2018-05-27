@@ -178,12 +178,19 @@ const long PIN_GUARD_5_ACTIVE_STATE_DEFAULT = 1;
 const long STATUS_GENERAL_DEFAULT = 0;
 
 const char SOFTWARE_VERSION[] = "GENESIS.V.01.14.EXPERIMENTAL\0";
-// Control the water servo angle
+// Control the water servo angle (Pin4)
 // MAX: Full open
 // MIN: Close the water switch
 //
 const long MAX_WATER_SERVO_ANGLE = 70;
 const long MIN_WATER_SERVO_ANGLE = 0;
+
+// Control the gripper servo angle (Pin5)
+// MAX: Close
+// MIN: Open
+//
+const long MAX_GRIPPER_SERVO_ANGLE = 150;
+const long MIN_GRIPPER_SERVO_ANGLE = 70;
 
 //
 // Water flow counts of 1L (default)

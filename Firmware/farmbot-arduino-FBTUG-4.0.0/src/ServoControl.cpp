@@ -59,14 +59,18 @@ int ServoControl::setAngle(int pin, int angle)
   {
   case 4:
     // CurrentWaterAngle = angle;
-	if ((angle > MAX_WATER_SERVO_ANGLE) || (angle < MIN_WATER_SERVO_ANGLE)) {
-	    Serial.print("The angle is out of control");
-        return 1;
-	}
+	  if ((angle > MAX_WATER_SERVO_ANGLE) || (angle < MIN_WATER_SERVO_ANGLE)) {
+	    Serial.print("The water servo angle is out of control");
+      return 1;
+	  }
     servos[0].write(angle);
     break;
   case 5:
     servos[1].write(angle);
+    if ((angle > MAX_GRIPPER_SERVO_ANGLE) || (angle < MIN_GRIPPER_SERVO_ANGLE)) {
+      Serial.print("The gripper servo angle is out of control");
+      return 1;
+    }
     break;
   default:
     return 1;
