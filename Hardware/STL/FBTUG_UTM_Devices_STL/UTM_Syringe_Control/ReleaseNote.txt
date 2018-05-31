@@ -1,0 +1,8 @@
+Youtube:
+  https://www.youtube.com/watch?v=DciOD8RQiqQ&t=19s
+
+Command:
+  F61 P5 V0
+  F61 P5 V150 
+  
+  V: Control the servo angle
