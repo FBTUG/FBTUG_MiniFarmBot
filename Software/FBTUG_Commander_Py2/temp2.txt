@@ -1,0 +1,21 @@
+ICON...
+screen:  [1184, 624]
+w, h:  [1184, 560]
+*** Input Tab 293 454
+*** TAB 295 477
+*** Frame w,h:  439 253
+/dev/ttyACM0 : connection Refused!
+/dev/ttyACM1 : connection Refused!
+/dev/ttyACM2 : connection Refused!
+/dev/tty0 : connection Refused!
+/dev/ttyUSB0 : connection Refused!
+>>> Cam ID  1
+cap.isOpened: False
+Cam ID  0 : connected successfully!
+thread running
+thread resume
+Para set
+Close Main Thread...
+Close Arduino Thread...
+[1500, 1500, 900]
+Release Cap()
