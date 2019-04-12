@@ -24,7 +24,7 @@ from class_CameraMntr import*
 import class_MyThread
 import class_ImageProcessing
 from class_PlantIdentifier import PlantIdentifier
-import imgProcess_tool 
+import imgProcess_tool
 import gui_vars
 from class_ConfigSetting import ConfigSetting
 #from class_ConfigSetting_new import ConfigSetting
@@ -40,7 +40,7 @@ class App:
         myfont12 = tkFont.Font(family=strFont, size=12)#, weight= tkFont.BOLD)
         myfont12_Bold = tkFont.Font(family=strFont, size=12, weight= tkFont.BOLD)
         myfont10 = tkFont.Font(family=strFont, size=10)
-        myfont10_Bold = tkFont.Font(family=strFont, size=10, weight= tkFont.BOLD)	#2018.02.28
+        myfont10_Bold = tkFont.Font(family=strFont, size=10, weight= tkFont.BOLD)   #2018.02.28
         myfont8 = tkFont.Font(family=strFont, size=8, weight= tkFont.BOLD)
         self.bgGreen= '#007700'
         self.bgGreen_active= '#00aa00'
@@ -64,14 +64,14 @@ class App:
             print 'ICON...'
             self.img_icon = Tkinter.PhotoImage(file = gui_vars.saveParaPath+'Icon_2.png')
             #img_icon = Tkinter.PhotoImage(file = gui_vars.saveParaPath+'img_Seed.png')
-            #print self.img_icon 
+            #print self.img_icon
             self.root.tk.call('wm', 'iconphoto', self.root._w, self.img_icon)
         self.config= ConfigSetting(gui_vars.saveParaPath, gui_vars.configName, gui_vars.defaultDict)
         params= self.config.read_json()
         #print 'para: ',params
         self.threshold_graylevel= params['thrshd_gray']
-        self.threshold_MinSize= params['thrshd_Minsize'] 
-        self.threshold_MaxSize= params['thrshd_Maxsize'] 
+        self.threshold_MinSize= params['thrshd_Minsize']
+        self.threshold_MaxSize= params['thrshd_Maxsize']
         self.scan_X= params['Scan_X (Beg,Interval,Amount)']
         self.scan_Y= params['Scan_Y (Beg,Interval,Amount)']
         self.limit= params['limit Maximum (X,Y)']
@@ -84,25 +84,25 @@ class App:
         self.pinNumb_fan= 8
         self.pinNumb_water= 9
         self.pinNumb_seed= 10
-        
+
         #for key, value in params['Peripheral Setting']:
-        for key, value in self.Peripheral_para:		#2018.02.28
-            print key, value	#2018.02.28
-            if key.strip().replace(' ','').lower() == 'waterpump':	# is -> == 2018.02.28
-				self.pinNumb_water= value
-				print 'pinNumb_water: ', self.pinNumb_water		#2018.02.28
-            if key.strip().replace(' ','').lower() == 'vaccumpump':	# is -> == 2018.02.28
+        for key, value in self.Peripheral_para:     #2018.02.28
+            print key, value    #2018.02.28
+            if key.strip().replace(' ','').lower() == 'waterpump':  # is -> == 2018.02.28
+                self.pinNumb_water= value
+                print 'pinNumb_water: ', self.pinNumb_water     #2018.02.28
+            if key.strip().replace(' ','').lower() == 'vaccumpump': # is -> == 2018.02.28
                 self.pinNumb_seed= value
-                print 'pinNumb_seed: ', self.pinNumb_seed		#2018.02.28
-            if key.strip().replace(' ','').lower() == 'fan':		# is -> == 2018.02.28
-				self.pinNumb_fan= value
-				print 'pinNumb_fan: ', self.pinNumb_fan			#2018.02.28
-		
-        print 'Pin Value: ',self.Peripheral_para	#2018.02.28	
+                print 'pinNumb_seed: ', self.pinNumb_seed       #2018.02.28
+            if key.strip().replace(' ','').lower() == 'fan':        # is -> == 2018.02.28
+                self.pinNumb_fan= value
+                print 'pinNumb_fan: ', self.pinNumb_fan         #2018.02.28
+
+        print 'Pin Value: ',self.Peripheral_para    #2018.02.28
 
         self.imageProcessor= class_ImageProcessing.contour_detect(gui_vars.savePath,gui_vars.saveParaPath)
         self.checkmouse_panel_mergeframe= False
-        self.x1, self.y1, self.x2, self.y2= -1,-1,-1,-1        
+        self.x1, self.y1, self.x2, self.y2= -1,-1,-1,-1
         self.StartScan_judge= False
         self.StartRunScript_judge= False
         self.saveScanning= 'XXX'
@@ -117,7 +117,7 @@ class App:
         #gui_vars.interval_x, gui_vars.interval_y= 6, 6
         self.mergeframe_spaceY= 50
         #print width,',', height,' ; ',btn_width,',', btn_height
-        
+
         # =======================================
         # [Config] Menu Bar
         # =======================================
@@ -164,21 +164,21 @@ class App:
         Left_height= int((self.screen_height-self.FileMenu.winfo_reqheight()*1- self.statuslabel.winfo_reqheight()*0-gui_vars.interval_y*2- self.lbl_CurrPos.winfo_reqheight()))
         self.tabbox = ttk.Notebook(self.root, width=Left_width, height=Left_height)
         self.tab_control = Tkinter.Frame(self.root)
-	self.tab_loadscript = Tkinter.Frame(self.root)
-	self.tab_imageprocess = Tkinter.Frame(self.root)
+        self.tab_loadscript = Tkinter.Frame(self.root)
+        self.tab_imageprocess = Tkinter.Frame(self.root)
 
-	self.tabbox.add(self.tab_control, text="CONTROL")
-	self.tabbox.add(self.tab_loadscript, text="LOAD SCRIPT")
-	self.tabbox.add(self.tab_imageprocess, text="IMAGE")
+        self.tabbox.add(self.tab_control, text="CONTROL")
+        self.tabbox.add(self.tab_loadscript, text="LOAD SCRIPT")
+        self.tabbox.add(self.tab_imageprocess, text="IMAGE")
 
-	#self.tabbox.place(x= 0, y= 0)
-	self.tabbox.place(x= 0, y= self.lbl_CurrPos.winfo_y()+ self.lbl_CurrPos.winfo_reqheight()+ gui_vars.interval_y)
+        #self.tabbox.place(x= 0, y= 0)
+        self.tabbox.place(x= 0, y= self.lbl_CurrPos.winfo_y()+ self.lbl_CurrPos.winfo_reqheight()+ gui_vars.interval_y)
         self.root.update()
         print '*** Input Tab', Left_width, Left_height
         print '*** TAB',self.tabbox.winfo_reqwidth(), self.tabbox.winfo_reqheight()
 
         # ==================================================
-        # [TAB CONTROL] Step Motor Control 
+        # [TAB CONTROL] Step Motor Control
         # ==================================================
         self.lbl_MoveCoord= Tkinter.Label(self.tab_control, text="[ MOVE ]", font= myfont14)
         #self.lbl_MoveCoord.place(x= gui_vars.interval_x, y= self.lbl_CurrPos.winfo_y()+ self.lbl_CurrPos.winfo_height()+gui_vars.interval_y)
@@ -191,38 +191,38 @@ class App:
         #self.rdbtnMvAmount_Mode= [('100', 100),('500', 500),('1k',1000),('10k',10000), ('100k',100000)]
         #self.rdbtnMvAmount_Mode= [('10mm', 10),('50mm', 50),('100mm',100),('200mm',200), ('500mm',500)] -2018.02.28-CGH
         #Save in Farmbot_GeneralAP\Para\config.json - 2018.02.28
-        
+
         self.MvAmount= Tkinter.IntVar()
-        
+
         self.rdbtn_MvAmount_1= Tkinter.Radiobutton(self.tab_control, text= self.rdbtnMvAmount_Mode[0][0], value= self.rdbtnMvAmount_Mode[0][1],variable= self.MvAmount,font= myfont12_Bold, command= self.rdbtn_MvAmount_click, indicatoron=0, width=5, fg= 'white', activeforeground='white', bg= bgGray, activebackground= bgGray_active,selectcolor= bgGray_select)
         self.rdbtn_MvAmount_1.place(x= gui_vars.interval_x, y=self.lbl_MoveCoord.winfo_y()+ self.lbl_MoveCoord.winfo_reqheight()+ gui_vars.interval_y)
         self.root.update()
-        
+
         self.rdbtn_MvAmount_5= Tkinter.Radiobutton(self.tab_control, text= self.rdbtnMvAmount_Mode[1][0], value=self.rdbtnMvAmount_Mode[1][1], variable= self.MvAmount,font= myfont12_Bold, command= self.rdbtn_MvAmount_click, indicatoron=0, width=5, fg= 'white', activeforeground='white', bg= bgGray, activebackground= bgGray_active,selectcolor= bgGray_select)
         self.rdbtn_MvAmount_5.place(x= gui_vars.interval_x+ self.rdbtn_MvAmount_1.winfo_x()+ self.rdbtn_MvAmount_1.winfo_reqwidth(),y= self.rdbtn_MvAmount_1.winfo_y())
         self.root.update()
-        
+
         self.rdbtn_MvAmount_10= Tkinter.Radiobutton(self.tab_control, text= self.rdbtnMvAmount_Mode[2][0], value=self.rdbtnMvAmount_Mode[2][1], variable= self.MvAmount,font= myfont12_Bold, command= self.rdbtn_MvAmount_click, indicatoron=0, width=5, fg= 'white', activeforeground='white', bg= bgGray, activebackground= bgGray_active,selectcolor= bgGray_select)
         self.rdbtn_MvAmount_10.place(x= gui_vars.interval_x+ self.rdbtn_MvAmount_5.winfo_x()+ self.rdbtn_MvAmount_5.winfo_reqwidth(),y= self.rdbtn_MvAmount_1.winfo_y())
         self.root.update()
-        
+
         self.rdbtn_MvAmount_50= Tkinter.Radiobutton(self.tab_control, text= self.rdbtnMvAmount_Mode[3][0], value=self.rdbtnMvAmount_Mode[3][1], variable= self.MvAmount,font= myfont12_Bold, command= self.rdbtn_MvAmount_click, indicatoron=0, width=5, fg= 'white', activeforeground='white', bg= bgGray, activebackground= bgGray_active,selectcolor= bgGray_select)
         self.rdbtn_MvAmount_50.place(x= gui_vars.interval_x+ self.rdbtn_MvAmount_10.winfo_x()+ self.rdbtn_MvAmount_10.winfo_reqwidth(),y= self.rdbtn_MvAmount_1.winfo_y())
         self.root.update()
-        
+
         self.rdbtn_MvAmount_100= Tkinter.Radiobutton(self.tab_control, text= self.rdbtnMvAmount_Mode[4][0], value=self.rdbtnMvAmount_Mode[4][1], variable= self.MvAmount,font= myfont12_Bold, command= self.rdbtn_MvAmount_click, indicatoron=0, width=5, fg= 'white', activeforeground='white', bg= bgGray, activebackground= bgGray_active,selectcolor= bgGray_select)
         self.rdbtn_MvAmount_100.place(x= gui_vars.interval_x+ self.rdbtn_MvAmount_50.winfo_x()+ self.rdbtn_MvAmount_50.winfo_reqwidth(),y= self.rdbtn_MvAmount_1.winfo_y())
         self.root.update()
-        
+
         #self.rdbtn_MvAmount_10.select()
         #self.Move_interval= self.rdbtnMvAmount_Mode[2][1]
-        self.rdbtn_MvAmount_1.select()  			#2018.02.28
-        self.Move_interval= self.rdbtnMvAmount_Mode[0][1]   	#2018.02.28                
-        
+        self.rdbtn_MvAmount_1.select()              #2018.02.28
+        self.Move_interval= self.rdbtnMvAmount_Mode[0][1]       #2018.02.28
+
         self.lbl_posUnit_1= Tkinter.Label(self.tab_control, text='(step)')
         self.lbl_posUnit_1.place(x= self.rdbtn_MvAmount_100.winfo_x()+ self.rdbtn_MvAmount_100.winfo_width(), y= self.rdbtn_MvAmount_1.winfo_y()+gui_vars.interval_y)
         self.root.update()
-        
+
         # ==================================================
         # [TAB CONTROL] Move 1 interval at specific Axis
         # ==================================================
@@ -255,7 +255,7 @@ class App:
         self.btn_MoveZDown.image= photo_down
         self.btn_MoveZDown.place(x= self.btn_MoveZUp.winfo_x(), y=self.btn_MoveDown.winfo_y())
         self.root.update()
-        
+
         # ==================================================
         # [TAB CONTROL] Seeding, Watering, Lighting, Grab Image
         # ==================================================
@@ -271,7 +271,7 @@ class App:
         self.root.update()
         photo_light= self.IconResize(gui_vars.saveParaPath+'img_Light.png')
         self.btn_Light= Tkinter.Button(self.tab_control,image= photo_light, cursor= 'hand2', command= self.btn_Light_click)
-        self.btn_Light.image= photo_light 
+        self.btn_Light.image= photo_light
         self.btn_Light.place(x= self.btn_Water.winfo_x()+ int(self.btn_Water.winfo_reqwidth()*1.5)+ gui_vars.interval_x, y=self.btn_Seed.winfo_y())
         self.root.update()
         photo_cam= self.IconResize(gui_vars.saveParaPath+'img_Cam.png')
@@ -281,7 +281,7 @@ class App:
         self.root.update()
 
         # ==================================================
-        # [TAB CONTROL] Move To 
+        # [TAB CONTROL] Move To
         # ==================================================
         self.lbl_Xpos= Tkinter.Label(self.tab_control, text= 'X :',font= myfont12)
         #self.lbl_Xpos.place(x= gui_vars.interval_x, y = self.btn_MoveDown.winfo_y()+ self.btn_MoveDown.winfo_height()+gui_vars.interval_y*3)
@@ -298,7 +298,7 @@ class App:
         self.entry_Ypos.insert(Tkinter.END, "0")
         self.entry_Ypos.place(x= self.lbl_Ypos.winfo_x()+ self.lbl_Ypos.winfo_width(), y= self.lbl_Ypos.winfo_y())
         self.root.update()
-        
+
         self.lbl_Zpos= Tkinter.Label(self.tab_control, text= 'Z :',font= myfont12)
         self.lbl_Zpos.place(x= self.entry_Ypos.winfo_x()+ self.entry_Ypos.winfo_width()+ gui_vars.interval_x, y = self.lbl_Xpos.winfo_y())
         self.root.update()
@@ -316,7 +316,7 @@ class App:
         self.root.update()
 
         # ==================================================
-        # [TAB CONTROL] Scanning Control 
+        # [TAB CONTROL] Scanning Control
         # ==================================================
         self.lbl_Scan= Tkinter.Label(self.tab_control, text="[ AUTO-SCAN ]", font= myfont14)
         self.lbl_Scan.place(x= gui_vars.interval_x, y= self.btn_MoveTo.winfo_y()+ self.btn_MoveTo.winfo_height()+gui_vars.interval_y)
@@ -338,7 +338,7 @@ class App:
         self.entry_1stYpos.insert(Tkinter.END, '{0}'.format(self.scan_Y[0]))
         self.entry_1stYpos.place(x= self.lbl_Scan1stPt_comma.winfo_x()+self.lbl_Scan1stPt_comma.winfo_width(), y= self.lbl_Scan1stPt_comma.winfo_y())
         self.root.update()
-       
+
         self.lbl_ScanInterval= Tkinter.Label(self.tab_control, text='* Interval (X, Y) :', font= myfont12)
         self.lbl_ScanInterval.place(x= self.entry_1stYpos.winfo_x()+ self.entry_1stYpos.winfo_reqwidth()+ gui_vars.interval_x*4, y= self.lbl_Scan1stPt.winfo_y())
         self.root.update()
@@ -372,14 +372,14 @@ class App:
         self.btn_StartScan= Tkinter.Button(self.tab_control, text= 'Start Scan', command= self.btn_StartScan_click,font= myfont12_Bold, fg= 'white', activeforeground='white', bg=self.bgGreen, activebackground=self.bgGreen_active, width= btn_width, height= btn_height)
         self.btn_StartScan.place(x= self.entry_ScanInterval_X.winfo_x()+ gui_vars.interval_x*6, y=self.lbl_ScanAmount.winfo_y()+gui_vars.interval_y*2)
         self.root.update()
-        
+
         # ==================================================
-        # [TAB LOAD SCRIPT]  
+        # [TAB LOAD SCRIPT]
         # ==================================================
         self.lbl_loadscript= Tkinter.Label(self.tab_loadscript, text="[ Load & Run Script ]", font= myfont14)
         self.lbl_loadscript.place(x= gui_vars.interval_x, y= gui_vars.interval_y)
         self.root.update()
-        
+
         self.entry_scriptPath= Tkinter.Entry(self.tab_loadscript, font= myfont12, width=25)
         self.entry_scriptPath.insert(Tkinter.END, self.scriptPath)
         self.entry_scriptPath.place(x= self.lbl_loadscript.winfo_x(), y= self.lbl_loadscript.winfo_y()+ self.lbl_loadscript.winfo_reqheight()+ gui_vars.interval_y)
@@ -397,13 +397,13 @@ class App:
         self.btn_runscript.place(x= self.btn_savescript.winfo_x()+ self.btn_savescript.winfo_reqwidth()+ gui_vars.interval_x*2, y= self.btn_savescript.winfo_y())
         self.btn_runscript.focus_set()
         self.root.update()
-        
+
         #self.txtbox_script = ScrolledText.ScrolledText(self.tab_loadscript, width=40, height= 30 ,font = myfont10, bd = 2, relief = RIDGE, vscrollmode= 'dynamic')
         self.txtbox_script = Pmw.ScrolledText(self.tab_loadscript, text_width=40, text_height= 20, hscrollmode= 'dynamic', vscrollmode= 'static', text_wrap= 'none', labelpos= 'n', label_text= "NaN")#, rowheader= 1)
         self.txtbox_script.place(x= self.btn_loadscript.winfo_x(), y= self.btn_loadscript.winfo_y()+ self.btn_loadscript.winfo_reqheight()+ gui_vars.interval_y)
 
         # ==================================================
-        # [TAB IMAGE] Image Processing 
+        # [TAB IMAGE] Image Processing
         # ==================================================
         self.btn_saveImg= Tkinter.Button(self.tab_imageprocess, text='Save Image', command= self.btn_saveImg_click,font= myfont14, width= btn_width, height= btn_height)
         self.btn_saveImg.place(x= gui_vars.interval_x, y= gui_vars.interval_y)
@@ -412,15 +412,15 @@ class App:
         self.lbl_scracth_detect= Tkinter.Label(self.tab_imageprocess, text="[ Detect Green Plant ]", font= myfont14)
         self.lbl_scracth_detect.place(x= gui_vars.interval_x, y= self.btn_saveImg.winfo_y()+ self.btn_saveImg.winfo_reqheight()+ gui_vars.interval_y)
         self.root.update()
-        
+
         self.btn_detect= Tkinter.Button(self.tab_imageprocess, text='Detect', command= self.detectGreenPlant,font= myfont12_Bold, width= btn_width, height= btn_height, fg= 'white',activeforeground='white', bg= bgGray,activebackground= bgGray_active)
         self.btn_detect.place(x= self.lbl_scracth_detect.winfo_x()+ self.lbl_scracth_detect.winfo_reqwidth()+ gui_vars.interval_x, y= self.lbl_scracth_detect.winfo_y())
         self.root.update()
         #=============================================
-        # [group] Plant Index 
+        # [group] Plant Index
         #=============================================
         self.grp_PlantIndex= Tkinter.LabelFrame(self.tab_imageprocess, text= 'Plant Index', width=Left_width-gui_vars.interval_x*2 ,height=40, relief=Tkinter.RIDGE, padx=0, pady=0)#, font= self.__myfont12_Bold)
-        
+
         y_rdbox= self.lbl_scracth_detect.winfo_y()+ self.lbl_scracth_detect.winfo_height()+ gui_vars.interval_y
         self.lst_PlantIndex_rdbox = list()
         self.PlantIndex= Tkinter.IntVar()
@@ -431,10 +431,10 @@ class App:
         self.grp_PlantIndex.place(x= gui_vars.interval_x, y=y_rdbox)
         self.root.update()
         #=============================================
-        # [group] Binary Method  
+        # [group] Binary Method
         #=============================================
         self.grp_BinaryMethod= Tkinter.LabelFrame(self.tab_imageprocess, text= 'Binary Method', width=Left_width-gui_vars.interval_x*2 ,height=40, relief=Tkinter.RIDGE, padx=0, pady=0)#, font= self.__myfont12_Bold)
-        
+
         self.lst_BinaryMethod_rdbox = list()
         self.BinaryMethodIndex= Tkinter.IntVar()
         for idx, name in enumerate(gui_vars.rdbox_BinaryMethodItem):
@@ -443,7 +443,7 @@ class App:
         self.lst_BinaryMethod_rdbox[0].select()
         self.grp_BinaryMethod.place(x= gui_vars.interval_x, y=self.grp_PlantIndex.winfo_y()+ self.grp_PlantIndex.winfo_reqheight()+ gui_vars.interval_y*1)
         self.root.update()
-        
+
         self.scale_threshold_graylevel = Tkinter.Scale(self.tab_imageprocess , from_= 0 , to = 255 , orient = Tkinter.HORIZONTAL , label = "Gray_level", font = myfont12, width = 7, length = 300 )
         self.scale_threshold_graylevel.set(self.threshold_graylevel)
         self.scale_threshold_graylevel.place(x= self.grp_BinaryMethod.winfo_x(), y= self.grp_BinaryMethod.winfo_y()+ self.grp_BinaryMethod.winfo_reqheight()+gui_vars.interval_y*2)
@@ -459,13 +459,13 @@ class App:
         self.scale_threshold_MaxSize.set(self.threshold_MaxSize)
 
         self.scale_threshold_MaxSize.place(x= self.scale_threshold_MinSize.winfo_x(), y= self.scale_threshold_MinSize.winfo_y()+ self.scale_threshold_MinSize.winfo_height())
-        
+
         # ==================================================
-        # [ROOT] Main Image Frame 
+        # [ROOT] Main Image Frame
         # ==================================================
         #self.frame_width, self.frame_height= int(0.5*(self.screen_width-Left_width- gui_vars.interval_x*2)), int(0.5*(self.screen_height-self.FileMenu.winfo_reqheight()- self.statuslabel.winfo_reqheight() -gui_vars.interval_y*2))
         self.frame_width, self.frame_height= int(0.5*(self.screen_width-Left_width- gui_vars.interval_x*2)), int(0.5*(self.screen_height-self.FileMenu.winfo_reqheight()*0- self.statuslabel.winfo_reqheight() -gui_vars.interval_y*1))
-        print '*** Frame w,h: ',self.frame_width, self.frame_height 
+        print '*** Frame w,h: ',self.frame_width, self.frame_height
         self.frame= np.zeros((int(self.frame_height), int(self.frame_width),3),np.uint8)
         #frame= cv2.resize(frame,(self.frame_width,self.frame_height),interpolation=cv2.INTER_LINEAR)
         result = Image.fromarray(self.frame)
@@ -475,7 +475,7 @@ class App:
         self.panel.place(x=Left_width+gui_vars.interval_x, y= 0)
         self.root.update()
         # ==================================================
-        # [ROOT] Display merge Image Frame 
+        # [ROOT] Display merge Image Frame
         # ==================================================
         self.mergeframe_width, self.mergeframe_height= self.frame_width, self.frame_height*2+2
         self.mergeframe= np.zeros((int(self.mergeframe_height), int(self.mergeframe_width),3),np.uint8)
@@ -488,7 +488,7 @@ class App:
         self.panel_mergeframe.place(x=self.panel.winfo_x()+ self.panel.winfo_reqwidth(), y= 0)
         self.root.update()
         # ==================================================
-        # [ROOT] One Shot Image Frame 
+        # [ROOT] One Shot Image Frame
         # ==================================================
         self.singleframe_width, self.singleframe_height= self.frame_width, self.frame_height
         self.singleframe= np.zeros((int(self.singleframe_height), int(self.singleframe_width),3),np.uint8)
@@ -499,16 +499,16 @@ class App:
         self.panel_singleframe.image = result
         self.panel_singleframe.place(x=self.panel.winfo_x(), y= self.panel.winfo_y()+ self.panel.winfo_height())
         self.root.update()
-       
+
         # ==================================================
         #  Camera & Arduino Connection
         # ==================================================
         self.ArdMntr= MonitorThread()
         self.ArdMntr.start()
-        
+
         self.CamMntr= CameraLink(self.CameraID)
         #self.CamMntr.connect_camera()
-        
+
         # ==================================================
         #  Green Plant Indetifier
         # ==================================================
@@ -554,13 +554,14 @@ class App:
         #self.thread_scanning= class_MyThread.Thread(self.scanning_run)
         #self.thread_scanning.start()
         time.sleep(1)
-        if self.ArdMntr.connect: 
+        if self.ArdMntr.connect:
             self.ArdMntr.set_MaxSpeed(self.MaxSpeed[0],'x')
             self.ArdMntr.set_MaxSpeed(self.MaxSpeed[1],'y')
             self.ArdMntr.set_MaxSpeed(self.MaxSpeed[2],'z')
             self.ArdMntr.set_Acceleration(self.Acceleration[0],'x')
             self.ArdMntr.set_Acceleration(self.Acceleration[1],'y')
             self.ArdMntr.set_Acceleration(self.Acceleration[2],'z')
+            self.ArdMntr.set_Parameter(2,1) # set by the raspberry pi and it's asked to do a move command #2019.04.12
 
     def store_para(self, arg_filepath, arg_filename):
         saveDict={}
@@ -596,7 +597,7 @@ class App:
             #print 'Close Scanning Thread...'
             #del(self.thread_scanning)
             print self.MaxSpeed
-            
+
             self.CamMntr.release_cap()
             self.root.destroy()
 
@@ -608,7 +609,7 @@ class App:
 
         self.lbl_CurrPos.config(text= tmp_text)
         self.lbl_CurrPos.after(10,self.UI_callback)
-    
+
     def IconResize(self, arg_readPath, arg_zoom=1, arg_subsample= 4):
         photo_resize=PhotoImage(file=arg_readPath)
         photo_resize= photo_resize.zoom(arg_zoom)
@@ -626,19 +627,19 @@ class App:
             tmp_X, tmp_Y= int((mouse_x-begX)/self.mergeframe_splitX), int((mouse_y-begY)/self.mergeframe_splitY)
             #print '>> RANGE(X,Y): ',begY+ self.mergeframe_splitY*self.scan_Y[2] ,begX+ self.mergeframe_splitX*self.scan_X[2]
             if begX< mouse_x < begX+ self.mergeframe_splitX*self.scan_Y[2] and begY< mouse_y< begY+ self.mergeframe_splitY*self.scan_X[2]:
-            	#print 'tmp_X, tmp_Y= ', tmp_X, ', ', tmp_Y  #2018.02.12
-            
+                #print 'tmp_X, tmp_Y= ', tmp_X, ', ', tmp_Y  #2018.02.12
+
                 if self.readmergeframeIndex == gui_vars.scanIndex:
                     readPath= gui_vars.saveScanningPath
                     #tmp_filename= '{0}_{1}'.format(tmp_Y * self.scan_X[1], tmp_X * self.scan_Y[1])
-                    tmp_filename= '{0}_{1}'.format((self.scan_X[2] - 1 - tmp_Y) * self.scan_X[1], tmp_X * self.scan_Y[1])   #2018.02.12                    
+                    tmp_filename= '{0}_{1}'.format((self.scan_X[2] - 1 - tmp_Y) * self.scan_X[1], tmp_X * self.scan_Y[1])   #2018.02.12
                 else:
-                    readPath= gui_vars.saveImageProccesPath 
+                    readPath= gui_vars.saveImageProccesPath
                     #tmp_filename= '{0}_{1}'.format(tmp_Y, tmp_X)
-                    tmp_filename= '{0}_{1}'.format(self.scan_X[2] - 1 - tmp_Y, tmp_X)   #2018.02.12 
-                    
+                    tmp_filename= '{0}_{1}'.format(self.scan_X[2] - 1 - tmp_Y, tmp_X)   #2018.02.12
+
                 #print 'click file: ', tmp_filename
-                
+
                 tmp_frame= utils_tool.readImage(readPath+ self.readmergeframeIndex+'_'+self.saveTimeIndex+'_'+tmp_filename+'.jpg')
                 if tmp_frame is not False:
                     self.imagename= self.readmergeframeIndex+'_'+self.saveTimeIndex+tmp_filename
@@ -651,7 +652,7 @@ class App:
                     result = ImageTk.PhotoImage(result)
                     self.panel_mergeframe.configure(image = result)
                     self.panel_mergeframe.image = result
-            
+
 
     def check_status(self):
         self.statuslabel.config(text= self.strStatus)
@@ -692,9 +693,9 @@ class App:
             self.btn_MoveRight.config(state= 'disabled')
             self.btn_MoveZUp.config(state= 'disabled')
             self.btn_MoveZDown.config(state= 'disabled')
-            self.btn_Water.config(state= 'disabled') 
-            self.btn_Seed.config(state= 'disabled') 
-            self.btn_CamGrab.config(state= 'disabled') 
+            self.btn_Water.config(state= 'disabled')
+            self.btn_Seed.config(state= 'disabled')
+            self.btn_CamGrab.config(state= 'disabled')
         else:
             self.btn_MoveTo.config(state= 'normal')
             self.entry_Xpos.config(state= 'normal')
@@ -715,9 +716,9 @@ class App:
             self.btn_MoveRight.config(state= 'normal')
             self.btn_MoveZUp.config(state= 'normal')
             self.btn_MoveZDown.config(state= 'normal')
-            self.btn_Water.config(state= 'normal') 
-            self.btn_Seed.config(state= 'normal') 
-            self.btn_CamGrab.config(state= 'normal') 
+            self.btn_Water.config(state= 'normal')
+            self.btn_Seed.config(state= 'normal')
+            self.btn_CamGrab.config(state= 'normal')
 
     def Lock_tabloadscript(self, arg_Lock):
         if arg_Lock:
@@ -755,11 +756,11 @@ class App:
             image_plantIndex= self.plantsArea.NDIimage(True)
         elif self.PlantIndex.get()==2:
             image_plantIndex= self.plantsArea.ExGimage(True)
-        
+
         self.threshold_graylevel= self.scale_threshold_graylevel.get()
         image_plantIndex_thr= imgProcess_tool.binarialization(image_plantIndex.astype(np.uint8), self.BinaryMethodIndex.get(), self.threshold_graylevel)
         cv2.imwrite('Debug/img_thr.jpg',image_plantIndex_thr)
-        
+
         self.threshold_MinSize, self.threshold_MaxSize=int(self.scale_threshold_MinSize.get()), int(self.scale_threshold_MaxSize.get())
         result= imgProcess_tool.findContours(image_plantIndex_thr, self.plantsArea.image_raw, (self.threshold_MinSize, self.threshold_MaxSize),True)
         #self.singleframe= result_ExG
@@ -772,7 +773,7 @@ class App:
         self.display_panel_mergeframe(result, 1, 1)
         self.saveTimeIndex= datetime.now().strftime('%Y%m%d%H%M%S')
         self.readmergeframeIndex= gui_vars.rdbox_PlantIndexItem[self.PlantIndex.get()]
-        
+
         print '=== ', gui_vars.saveImageProccesPath, self.readmergeframeIndex+'_'+self.saveTimeIndex
         self.saveImg_function(self.singleframe, gui_vars.saveImageProccesPath, self.readmergeframeIndex+'_'+self.saveTimeIndex+'_0_0')
         self.saveImg_function(image_plantIndex.astype(np.uint8), gui_vars.saveImageProccesPath, self.readmergeframeIndex+'_'+self.saveTimeIndex+'_0_1')
@@ -830,15 +831,15 @@ class App:
         #-2018.02.28-CGH
         for key, value in self.Peripheral_para:
             if key.strip().replace(' ','').lower() == 'waterpump':  # is -> == 2018.02.28
-				self.pinNumb_water= value
-				print 'pinNumb_water: ', self.pinNumb_water		#2018.02.28
-            if key.strip().replace(' ','').lower() == 'vaccumpump':	# is -> == 2018.02.28
+                self.pinNumb_water= value
+                print 'pinNumb_water: ', self.pinNumb_water     #2018.02.28
+            if key.strip().replace(' ','').lower() == 'vaccumpump': # is -> == 2018.02.28
                 self.pinNumb_seed= value
-                print 'pinNumb_seed: ', self.pinNumb_seed		#2018.02.28
-            if key.strip().replace(' ','').lower() == 'fan':		# is -> == 2018.02.28
-				self.pinNumb_fan= value
-				print 'pinNumb_fan: ', self.pinNumb_fan			#2018.02.28
-				
+                print 'pinNumb_seed: ', self.pinNumb_seed       #2018.02.28
+            if key.strip().replace(' ','').lower() == 'fan':        # is -> == 2018.02.28
+                self.pinNumb_fan= value
+                print 'pinNumb_fan: ', self.pinNumb_fan         #2018.02.28
+
     def set_Motor(self):
         if self.ArdMntr.connect:
             Var= MotorSetting(self.root, self.MaxSpeed, self.Acceleration)
@@ -861,11 +862,11 @@ class App:
 
     def set_frame(self, frame):
         self.frame= frame
-    
+
     def display_panel_singleframe(self, arg_frame):
         tmp_frame= cv2.cvtColor(arg_frame, cv2.COLOR_BGR2RGB)
         #tmp_frame = self.mark_cross_line(tmp_frame)
-        tmp_frame= cv2.resize(tmp_frame,(self.singleframe_width,self.singleframe_height),interpolation=cv2.INTER_LINEAR)	#2018.02.20-???
+        tmp_frame= cv2.resize(tmp_frame,(self.singleframe_width,self.singleframe_height),interpolation=cv2.INTER_LINEAR)    #2018.02.20-???
         result = Image.fromarray(tmp_frame)
         result = ImageTk.PhotoImage(result)
         self.panel_singleframe.configure(image = result)
@@ -878,17 +879,17 @@ class App:
     def set_mergeframe_size(self, arg_x, arg_y):
         self.mergeframe_splitX= int((self.mergeframe_width-gui_vars.interval_x*2)/arg_y)
         self.mergeframe_splitY= int((self.mergeframe_height-100)/arg_x)
-    
-    def display_panel_mergeframe(self, arg_frame, arg_stepX, arg_stepY): 
+
+    def display_panel_mergeframe(self, arg_frame, arg_stepX, arg_stepY):
         print '*** ',len(arg_frame.shape)
         if len(arg_frame.shape)==3:
             tmp_frame= cv2.cvtColor(arg_frame, cv2.COLOR_BGR2RGB)
-        else: 
+        else:
             tmp_frame= cv2.cvtColor(arg_frame, cv2.COLOR_GRAY2RGB)
 
         tmp_frame= cv2.resize(tmp_frame,(self.mergeframe_splitX,self.mergeframe_splitY),interpolation=cv2.INTER_LINEAR)
         begX= gui_vars.interval_x+self.mergeframe_splitX*arg_stepX
-        begY= self.mergeframe_spaceY+ self.mergeframe_splitY* arg_stepY 
+        begY= self.mergeframe_spaceY+ self.mergeframe_splitY* arg_stepY
         self.mergeframe[begY:begY+ self.mergeframe_splitY, begX: begX+ self.mergeframe_splitX]= tmp_frame
         #begY= self.mergeframe_height- 50- self.mergeframe_splitY*arg_stepY
         #self.mergeframe[begY-self.mergeframe_splitY:begY, begX: begX+ self.mergeframe_splitX]= tmp_frame
@@ -896,7 +897,7 @@ class App:
         self.mergeframe_stepY= arg_stepY
         print '>> mergeframe_splitY, splitX= ', self.mergeframe_splitY, ', ', self.mergeframe_splitX
         print '>> tmp_frame.shape[0,1]= ', tmp_frame.shape[0],', ',tmp_frame.shape[1]
-        
+
         result = Image.fromarray(self.mergeframe)
         result = ImageTk.PhotoImage(result)
         self.panel_mergeframe.configure(image = result)
@@ -922,7 +923,7 @@ class App:
         #print '*** ',self.tabbox.select()
         if self.tabbox.index(self.tabbox.select())==0:
             if type(event) is types.StringType:
-                move_type= event 
+                move_type= event
             else:
                 print'event.keysym ', event.keysym
                 print 'event.keycode', event.keycode
@@ -944,10 +945,10 @@ class App:
     def btn_MoveAmountZaxis_click(self, event= None):
         if self.tabbox.index(self.tabbox.select())==0:
             if type(event) is types.StringType:
-                move_type= event 
+                move_type= event
             else:
                 move_type= event.keysym
-            
+
             tmp_x, tmp_y, tmp_z= self.ArdMntr.get_CurPosition()
             if move_type == 'Up':
                 self.ArdMntr.move_Coord(tmp_x, tmp_y, tmp_z+ self.Move_interval*self.Move_intervalUnit)
@@ -966,7 +967,7 @@ class App:
         if self.ArdMntr.connect:
             self.ArdMntr.switch_Light(self.pinNumb_fan, not(self.ArdMntr.LightOn))
             print 'Lighting... '
-            
+
             #pass-2018.02.12
 
     def btn_choosescript_click(self):
@@ -996,12 +997,12 @@ class App:
                 self.txtbox_script.insert(END, cmd+'\n')
         cmd_file.close()
         '''
-        
+
     def btn_savescript_click(self):
         tmpPath= self.entry_scriptPath.get()
         self.txtbox_script.exportfile(tmpPath)
 
-    
+
 
     def btn_runscript_click(self):
         if self.ArdMntr.connect:
@@ -1046,7 +1047,7 @@ class App:
         self.imageProcessor.set_threshold_size(int(self.scale_threshold_MinSize.get()))
         self.imageProcessor.set_threshold_graylevel(int(self.scale_threshold_graylevel.get()))
         self.input_Zpos= int(self.entry_Zpos.get())
-        self.readmergeframeIndex= gui_vars.scanIndex 
+        self.readmergeframeIndex= gui_vars.scanIndex
         print 'Start'
         if self.StartScan_judge:
             #===================================
@@ -1070,7 +1071,7 @@ class App:
                     self.set_mergeframe_size(self.scan_X[2], self.scan_Y[2])
                     self.reset_mergeframe()
                     #print '### ', self.scan_X, self.scan_Y
-                
+
                     self.ArdMntr.move_Coord(self.scan_X[0], self.scan_Y[0], self.input_Zpos)
                     if self.scan_X[0]+self.scan_X[1]*self.scan_X[2]<self.limit[0] | self.scan_Y[0]+self.scan_Y[1]*self.scan_Y[2]<self.limit[1]:
                         self.StartScan_judge= True
@@ -1082,11 +1083,11 @@ class App:
                         self.thread_scanning= threading.Thread(target= self.scanning_run)
                         self.thread_scanning.start()
                         print '*** scanning...'
-                    	self.Lock_tabcontrol(True)
+                        self.Lock_tabcontrol(True)
                         self.Lock_Menubar(True)
                         self.tabbox.tab(self.tab_loadscript, state='disable')
                         self.tabbox.tab(self.tab_imageprocess, state='disable')
-                    	self.btn_StartScan.config(text= 'STOP Scan', fg='white', activeforeground= 'white', bg= self.bgRed, activebackground= self.bgRed_active)
+                        self.btn_StartScan.config(text= 'STOP Scan', fg='white', activeforeground= 'white', bg= self.bgRed, activebackground= self.bgRed_active)
                     else:
                         tkMessageBox.showerror("Error", "The scanning of X should be in [0~{0}]\nThe range of Y should be in [0~{1}]".format(self.limit[0],self.limit[1]))
                 except:
@@ -1101,7 +1102,7 @@ class App:
         self.singleframe = self.CamMntr.get_frame()
         self.saveImg_function(self.singleframe, gui_vars.savePath, self.imagename)
         self.display_panel_singleframe(self.singleframe)
-    
+
     def btn_loadImg_click(self):
         str_imagePath = tkFileDialog.askopenfilename(title = "Select image",filetypes = (("jpeg files","*.jpg"), ("png files","*.png"), ("tif files","*.tif"),("all files","*.*")))
         print '>>>> ', str_imagePath
@@ -1125,10 +1126,10 @@ class App:
                     print 'ArdMntr.move_Coord...'
                     self.ArdMntr.move_Coord(Target_X, Target_Y, Target_Z)
                     print 'Command: ',cmd
-                    time.sleep(1)                
+                    time.sleep(1)
                 else:
                     tkMessageBox.showerror("Error", "The range of X should be in [0~{0}]\nThe range of Y should be in [0~{1}]".format(self.limit[0],self.limit[1]))
-            
+
             except:
                 tkMessageBox.showerror("Error", "Please enter number!")
         else:
@@ -1148,7 +1149,7 @@ class App:
         #    makedirs(arg_savePath)
         #tmp= cv2.cvtColor(arg_frame, cv2.COLOR_RGB2BGR)
         cv2.imwrite(arg_savePath+arg_filename+'.jpg',arg_frame)
-    
+
     def runningScript_run(self):
         cmd_file = open('tmp.txt', "r")
         lines = cmd_file.readlines()
@@ -1170,7 +1171,7 @@ class App:
                             self.singleframe= self.CamMntr.get_frame()
                             self.saveImg_function(self.singleframe, gui_vars.savePath, imgName)
                             self.display_panel_singleframe(self.singleframe)
-                                    
+
                     else:
                         while 1:
                             if self.ArdMntr.cmd_state.is_ready(): #wait system ready to accept commands
@@ -1222,11 +1223,11 @@ class App:
                             self.display_panel_singleframe(result)
                             #self.display_panel_mergeframe(result, step_X, step_Y)
                             #self.display_panel_mergeframe(result, step_Y, step_X)
-                            
+
                             #self.display_panel_mergeframe(result, tmp_step_Y, step_X)
-                            self.display_panel_mergeframe(result, tmp_step_Y, self.scan_X[2] - 1 - step_X)   	#2018.02.12
-                            #print '>> display_panel X, Y: ', tmp_step_Y, ', ', self.scan_X[2] - 1 - step_X   	#2018.02.12
-                                                        
+                            self.display_panel_mergeframe(result, tmp_step_Y, self.scan_X[2] - 1 - step_X)      #2018.02.12
+                            #print '>> display_panel X, Y: ', tmp_step_Y, ', ', self.scan_X[2] - 1 - step_X     #2018.02.12
+
                             print self.saveScanning
                             #time.sleep(2)
                             break
@@ -1243,7 +1244,7 @@ class App:
             self.btn_StartScan.config(text= 'Start Scan', fg='white', activeforeground='white', bg= self.bgGreen, activebackground= self.bgGreen_active)
         else:
             time.sleep(0.2)
-            step=0      
+            step=0
 
 
     def check_frame_update(self):
@@ -1262,8 +1263,8 @@ class App:
             text='Arduino Connection Refused ...'
             text_water=''
             text_seed=''
-            text_light=''	#2018.02.12
-            
+            text_light=''   #2018.02.12
+
             color= (0,0,0)
             if self.ArdMntr.connect== True:
                 if self.StartScan_judge == False:

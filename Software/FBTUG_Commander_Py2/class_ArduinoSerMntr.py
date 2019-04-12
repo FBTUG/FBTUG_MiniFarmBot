@@ -201,14 +201,14 @@ class MonitorThread(threading.Thread):
         self.serial_send(cmd)
         time.sleep(0.05)
 
-
-    def set_Read_Parameter(self, arg_spd, arg_index):
+# 2019.04.12 Joe
+    def get_Parameter(self, arg_paraId, arg_value):
         cmd= 'F21 P{0} V{1}'.format(arg_paraId, arg_value)
         self.serial_send(cmd)
         time.sleep(0.05)
 
 
-    def set_Write_Parameter(self, arg_paraId, arg_value):
+    def set_Parameter(self, arg_paraId, arg_value):
         cmd= 'F22 P{0} V{1}'.format(arg_paraId, arg_value)
         self.serial_send(cmd)
         time.sleep(0.05)

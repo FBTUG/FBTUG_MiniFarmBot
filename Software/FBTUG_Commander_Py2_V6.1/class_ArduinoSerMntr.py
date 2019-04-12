@@ -49,7 +49,7 @@ class CmdState:
         if self.is_ready():
             self.cmd_state = CMDSTATE_R00
             self.cmd_str =  cmd_str
-        
+
     def set_by_recv(self, cmd_str):
         cmd_str1 = cmd_str.strip().split(" ")
         #print cmd_str1,', ', cmd_str
@@ -104,7 +104,7 @@ class MonitorThread(threading.Thread):
             except:
                 print 'Connection of Arduino refused!'
                 tkMessageBox.showerror("Error","Connection of Arduino refused!")
-        else: 
+        else:
             tkMessageBox.showerror("Error","Connection of Arduino is already built!")
 
     def set_ts(self, ts):
@@ -118,7 +118,7 @@ class MonitorThread(threading.Thread):
             #print(line)
             sys.stdout.write(line)
             self.cmd_state.set_by_recv(line)
-    
+
     def run(self):
         while 1:
             if self.connect:
@@ -129,7 +129,7 @@ class MonitorThread(threading.Thread):
                     self.connect= False
             else:
                 time.sleep(0.1)
-            
+
             if self.exit:
                 break
 
@@ -141,20 +141,20 @@ class MonitorThread(threading.Thread):
     def switch_Water(self, arg_pinNumb=9, arg_On=False, arg_delay=-1):
         if arg_On:
             #self.serial_send('F41 P9 V1 M0')
-            self.serial_send('F41 P{0} V1 M0'.format(arg_pinNumb))	#2018.02.28        
+            self.serial_send('F41 P{0} V1 M0'.format(arg_pinNumb))  #2018.02.28
             self.WaterOn= True
             if arg_delay== 0:
                 #self.serial_send('F41 P9 V0 M0')
-                self.serial_send('F41 P{0} V0 M0'.format(arg_pinNumb))	#2018.02.28
+                self.serial_send('F41 P{0} V0 M0'.format(arg_pinNumb))  #2018.02.28
                 self.WaterOn= False
             elif arg_delay> 0:
                 time.sleep(arg_delay)
                 #self.serial_send('F41 P9 V0 M0')
-                self.serial_send('F41 P{0} V0 M0'.format(arg_pinNumb))	#2018.02.28
+                self.serial_send('F41 P{0} V0 M0'.format(arg_pinNumb))  #2018.02.28
                 self.WaterOn= False
         else:
             #self.serial_send('F41 P9 V0 M0')
-            self.serial_send('F41 P{0} V0 M0'.format(arg_pinNumb))	#2018.02.28
+            self.serial_send('F41 P{0} V0 M0'.format(arg_pinNumb))  #2018.02.28
             self.WaterOn= False
 
     def switch_Seed(self, arg_pinNumb=10, arg_On=True):
@@ -164,13 +164,13 @@ class MonitorThread(threading.Thread):
         else:
             self.serial_send('F41 P{0} V0 M0'.format(arg_pinNumb))
             self.SeedOn= False
-    def switch_Light(self, arg_pinNumb=8, arg_On=True):     #2018.02.12 arg_on -> arg_On    
+    def switch_Light(self, arg_pinNumb=8, arg_On=True):     #2018.02.12 arg_on -> arg_On
         if arg_On:
-            self.serial_send('F41 P{0} V1 M0'.format(arg_pinNumb))	#2018.02.28
+            self.serial_send('F41 P{0} V1 M0'.format(arg_pinNumb))  #2018.02.28
             #self.serial_send('F41 P8 V1 M0')  #2018.02.12 {0}->8
             self.LightOn= True
         else:
-            self.serial_send('F41 P{0} V0 M0'.format(arg_pinNumb))	#2018.02.28
+            self.serial_send('F41 P{0} V0 M0'.format(arg_pinNumb))  #2018.02.28
             #self.serial_send('F41 P8 V0 M0')  #2018.02.12 {0}->8
             self.LightOn= False
 
@@ -184,10 +184,10 @@ class MonitorThread(threading.Thread):
         #tmp_x= int(self.cmd_state.strCurX)
         #tmp_y= int(self.cmd_state.strCurY)
         #tmp_z= int(self.cmd_state.strCurZ)
-        tmp_x= float(self.cmd_state.strCurX)	#2018.02.28-For v6.0.1
-        tmp_y= float(self.cmd_state.strCurY)	#2018.02.28-For v6.0.1
-        tmp_z= float(self.cmd_state.strCurZ)    #2018.02.28-For v6.0.1        
-                
+        tmp_x= float(self.cmd_state.strCurX)    #2018.02.28-For v6.0.1
+        tmp_y= float(self.cmd_state.strCurY)    #2018.02.28-For v6.0.1
+        tmp_z= float(self.cmd_state.strCurZ)    #2018.02.28-For v6.0.1
+
         return tmp_x, tmp_y, tmp_z
 
     def set_MaxSpeed(self, arg_spd, arg_index):
@@ -200,7 +200,7 @@ class MonitorThread(threading.Thread):
             cmd= 'F22 P73 V{0}'.format(arg_spd)
         self.serial_send(cmd)
         time.sleep(0.05)
-    
+
     def set_Acceleration(self, arg_acc, arg_index):
         if arg_index.lower() == 'x':
             cmd= 'F22 P41 V{0}'.format(arg_acc)
@@ -211,32 +211,45 @@ class MonitorThread(threading.Thread):
         self.serial_send(cmd)
         time.sleep(0.05)
 
+# 2019.04.12 Joe
+    def get_Parameter(self, arg_paraId, arg_value):
+        cmd= 'F21 P{0} V{1}'.format(arg_paraId, arg_value)
+        self.serial_send(cmd)
+        time.sleep(0.05)
+
+
+    def set_Parameter(self, arg_paraId, arg_value):
+        cmd= 'F22 P{0} V{1}'.format(arg_paraId, arg_value)
+        self.serial_send(cmd)
+        time.sleep(0.05)
+
+
 '''
 def main():
-    
+
     th = MonitorThread()
     th.start()
 
     cmd_delay_second =1
-    wait_ready_second =3 
-    run_mode = RUNMODE_CHECKIF # RUNMODE_CHECKIF, RUNMODE_VERIFY_CMDS(default), RUNMODE_CMDSCRIPT, 
-    
+    wait_ready_second =3
+    run_mode = RUNMODE_CHECKIF # RUNMODE_CHECKIF, RUNMODE_VERIFY_CMDS(default), RUNMODE_CMDSCRIPT,
+
     file_name = "serial_commands_list.txt"
     if run_mode == RUNMODE_CMDSCRIPT:
         file_name = "serial_script.txt"
-    
-        
+
+
     while 1:
         try:
             if run_mode == RUNMODE_CHECKIF:
                 th.serial_send("F83")
                 time.sleep(1)
-                
+
             else : # verify current commands.
                 cmd_file = open(file_name, "r")
                 lines = cmd_file.readlines()
                 for line in lines:
-                    
+
                     cols = line.split("#")
                     #print("line=%s,cols_count=%i" %(line,len(cols)))
                     if len(cols)>=1:
@@ -254,7 +267,7 @@ def main():
                             #ser.write("F83\n")
                     time.sleep(cmd_delay_second)
                 cmd_file.close()
-                
+
                 th.exit = True
                 break
 

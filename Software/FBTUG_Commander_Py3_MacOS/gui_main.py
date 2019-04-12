@@ -543,6 +543,7 @@ class App:
             self.ArdMntr.set_Acceleration(self.Acceleration[0],'x')
             self.ArdMntr.set_Acceleration(self.Acceleration[1],'y')
             self.ArdMntr.set_Acceleration(self.Acceleration[2],'z')
+            self.ArdMntr.set_Parameter(2,1) # set by the raspberry pi and it's asked to do a move command #2019.04.12
 
     def store_para(self, arg_filepath, arg_filename):
         saveDict={}
