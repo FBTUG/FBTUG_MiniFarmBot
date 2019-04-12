@@ -1,0 +1,37 @@
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+*.d
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+/Release
+/spec.d
+/arduino
+/.build
+
+
+# Visual Studio files
+/.vs
+/src/Debug
+/src/__vm
+
+# Setting files
+Debug.h
+_build
+bin
