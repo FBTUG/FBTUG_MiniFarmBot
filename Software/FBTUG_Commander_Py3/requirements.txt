@@ -1,4 +1,4 @@
-Django==1.11.4
+Django==2.2.24
 Pillow==4.2.1
 argparse==1.2.1
 image==1.5.11
